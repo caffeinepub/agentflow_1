@@ -1,0 +1,81 @@
+type http_request_result = 
+ record {
+   body: blob;
+   headers: vec http_header;
+   status: nat;
+ };
+type http_header = 
+ record {
+   name: text;
+   value: text;
+ };
+type TransformationOutput = 
+ record {
+   body: blob;
+   headers: vec http_header;
+   status: nat;
+ };
+type TransformationInput = 
+ record {
+   context: blob;
+   response: http_request_result;
+ };
+type ToolCall = 
+ record {
+   input: text;
+   output: text;
+   toolName: text;
+ };
+type Timestamp = int;
+type QueryStatus = 
+ record {
+   agentType: opt AgentType;
+   queryId: QueryId;
+   resultSummary: opt text;
+   status: variant {
+             complete;
+             failed;
+             pending;
+           };
+   timestamp: Timestamp;
+ };
+type QueryResult = 
+ record {
+   agentType: AgentType;
+   queryId: QueryId;
+   rawApiResponse: text;
+   resultSummary: text;
+   timestamp: Timestamp;
+   toolsUsed: vec ToolCall;
+ };
+type QueryRecord = 
+ record {
+   agentType: AgentType;
+   queryId: QueryId;
+   queryText: text;
+   rawApiResponse: text;
+   resultSummary: text;
+   timestamp: Timestamp;
+   toolsUsed: vec ToolCall;
+ };
+type QueryId = text;
+type MemoryContext = 
+ record {
+   activeAgents: vec AgentType;
+   lastToolCalls: vec ToolCall;
+   recentQueries: vec QueryRecord;
+   totalQueryCount: nat;
+ };
+type AgentType = 
+ variant {
+   general;
+   trading;
+   travel;
+ };
+service : {
+  getAgentHistory: (agentTypeText: text) -> (vec QueryRecord) query;
+  getMemoryContext: () -> (MemoryContext) query;
+  getQueryStatus: (queryId: text) -> (QueryStatus) query;
+  submitQuery: (queryText: text) -> (QueryResult);
+  transform: (input: TransformationInput) -> (TransformationOutput) query;
+}

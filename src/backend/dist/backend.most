@@ -1,0 +1,46 @@
+// Version: 1.0.0
+type AgentType__116449714 = {#general; #trading; #travel};
+type Data__791452850<K, V> =
+  {var count : Nat__490723111; kvs : [var ?(K, V)]};
+type Internal__8484328<K, V> =
+  {children : [var ?Node__46230540<K, V>]; data : Data__791452850<K, V>};
+type Leaf__809889148<K, V> = {data : Data__791452850<K, V>};
+type Nat__490723111 = Nat__920180692;
+type Nat__920180692 = Nat;
+type Node__46230540<K, V> =
+  {#internal : Internal__8484328<K, V>; #leaf : Leaf__809889148<K, V>};
+type QueryId__411481474 = Text;
+type QueryRecord__63849528 =
+  {
+    agentType : AgentType__116449714;
+    queryId : QueryId__411481474;
+    queryText : Text;
+    rawApiResponse : Text;
+    resultSummary : Text;
+    timestamp : Timestamp__301639476;
+    toolsUsed : [ToolCall__568264148]
+  };
+type QueryStatus__1026397267 =
+  {
+    agentType : ?AgentType__116449714;
+    queryId : QueryId__411481474;
+    resultSummary : ?Text;
+    status : {#complete; #failed; #pending};
+    timestamp : Timestamp__301639476
+  };
+type Timestamp__301639476 = Int;
+type ToolCall__568264148 = {input : Text; output : Text; toolName : Text};
+actor {
+  stable queryCounter : {var count : Nat};
+  stable queryHistory :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?QueryRecord__63849528]];
+      var elementIndex : Nat__490723111
+    };
+  stable queryStatusMap :
+    {
+      var root : Node__46230540<QueryId__411481474, QueryStatus__1026397267>;
+      var size : Nat__490723111
+    }
+};

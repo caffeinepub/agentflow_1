@@ -1,0 +1,25 @@
+{
+  "overview": "An interactive AI agent orchestration flow diagram that visualizes how queries route through an orchestrator to specialized agents (Travel, Trading, General) and their real external API tools. Features animated query flows, real data from Booking.com, Binance and web search, plus per-agent query history panels.",
+  "features": [
+    "Interactive flow diagram with animated query paths",
+    "Orchestrator node that routes queries to specialized agents",
+    "Travel agent with real Booking.com and Google Flights integration",
+    "Trading monitor with live Binance market data",
+    "General agent with web search capability",
+    "Per-agent query history side panel",
+    "Shared memory and context store",
+    "Dark theme with color-coded agent nodes"
+  ],
+  "category": "ai-tools",
+  "tags": [
+    "ai",
+    "agents",
+    "orchestration",
+    "flow-diagram",
+    "visualization",
+    "real-time",
+    "trading",
+    "travel"
+  ],
+  "last_updated": "2026-04-08T03:41:57.726Z"
+}
